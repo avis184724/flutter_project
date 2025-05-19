@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/signup_page.dart';
 import 'package:flutter_project/todo_local_page.dart';
 import 'package:flutter_project/todo_remote_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -33,7 +34,8 @@ class MyApp extends StatelessWidget {
         '/': (context) => const HomePage(),
         '/todo-local': (context) => const TodoLocalPage(),
         '/todo-remote': (context) => const TodoRemotePage(),
-        '/login': (context) => const LoginPage()
+        '/login': (context) => const LoginPage(),
+        '/signup': (context) => const SignUpPage()
       }
     );
   }
