@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/main_tap_page.dart';
 import 'package:flutter_project/signup_page.dart';
 import 'package:flutter_project/splash_page.dart';
 import 'package:flutter_project/todo_local_page.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/': (context) => const SplashPage(),
+        '/main': (context) => const MainTapPage(),
         '/todo-local': (context) => const TodoLocalPage(),
         '/todo-remote': (context) => const TodoRemotePage(),
         '/login': (context) => const LoginPage(),

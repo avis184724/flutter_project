@@ -24,7 +24,7 @@ class _SplashPageState extends State<SplashPage> {
     if (!mounted) return;
 
     if (user != null) {
-      Navigator.pushReplacementNamed(context, '/todo-remote');
+      Navigator.pushReplacementNamed(context, '/main');
     } else {
       Navigator.pushReplacementNamed(context, '/login');
     }
