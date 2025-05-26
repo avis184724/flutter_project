@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/signup_page.dart';
+import 'package:flutter_project/splash_page.dart';
 import 'package:flutter_project/todo_local_page.dart';
 import 'package:flutter_project/todo_remote_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       routes: {
-        '/': (context) => const HomePage(),
+        '/': (context) => const SplashPage(),
         '/todo-local': (context) => const TodoLocalPage(),
         '/todo-remote': (context) => const TodoRemotePage(),
         '/login': (context) => const LoginPage(),
