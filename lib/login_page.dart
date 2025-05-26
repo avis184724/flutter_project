@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
       );
 
       if (response.user != null) {
-        Navigator.pushReplacementNamed(context, '/todo-remote');
+        Navigator.pushReplacementNamed(context, '/main');
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
