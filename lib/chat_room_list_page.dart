@@ -22,13 +22,27 @@ class _ChatRoomListPageState extends State<ChatRoomListPage> {
   }
 
   Future<void> _loadRooms() async {
-    final data = await supabase
+    final roomsData = await supabase
         .from('rooms')
         .select()
         .order('created_at', ascending: false);
 
+    final List<Map<String, dynamic>> result = [];
+
+    for (final room in roomsData){
+      final messages = await supabase
+        .from("messages")
+        .select()
+        .eq('room_id', room['id'])
+        .order('created_at' ,ascending: false)
+        .limit(1);
+
+      room['last_message'] = messages.isNotEmpty ? messages.first['content'] ?? "" : "";
+      result.add(room);
+    }
+
     setState(() {
-      _rooms = List<Map<String, dynamic>>.from(data);
+      _rooms = result;
     });
   }
 
@@ -78,13 +92,14 @@ class _ChatRoomListPageState extends State<ChatRoomListPage> {
                   final room = _rooms[index];
                   final createdAt = DateTime.tryParse(room["created_at"] ?? "") ?? DateTime.now();
                   final timeString = "${createdAt.hour.toString().padLeft(2, '0')}:${createdAt.minute.toString().padLeft(2, '0')}";
+
                   return Card(
                     elevation: 2,
                     margin: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     child: ListTile(
                         leading: const Icon(Icons.chat_bubble_outline),
                         title: Text(room['name'] ?? "이름 없음"),
-                        subtitle: timeString.isNotEmpty ? Text("생성 시간: $timeString") : null,
+                        subtitle: timeString.isNotEmpty ? Text("생성 시간: $timeString" + room['last_message']) : null,
                         onTap: () {
                           Navigator.push(
                               context,
