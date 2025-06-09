@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/chat_room_list_page.dart';
 import 'package:flutter_project/todo_remote_page.dart';
 
 import 'chat_page.dart';
@@ -14,7 +15,7 @@ class _MainTapPageState extends State<MainTapPage> {
   int _selectedIndex = 0;
   final List<Widget> _pages = const [
     TodoRemotePage(),
-    ChatPage()
+    ChatRoomListPage()
   ];
 
   @override

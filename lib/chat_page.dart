@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({super.key});
+  final String roomId;
+  final String roomName;
+
+  const ChatPage({super.key, required this.roomId, required this.roomName});
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -17,6 +20,7 @@ class _ChatPageState extends State<ChatPage> {
     final data = await supabase
         .from("messages")
         .select()
+        .eq('room_id', widget.roomId)
         .order('created_at', ascending: false);
     setState(() {
       _messages.clear();
@@ -40,9 +44,12 @@ class _ChatPageState extends State<ChatPage> {
         schema: 'public',
         table: 'messages',
         callback: (payload) {
-          setState(() {
-            _messages.insert(0, payload.newRecord);
-          });
+          final msg = payload.newRecord;
+          if (msg['room_id'] == widget.roomId) {
+            setState(() {
+              _messages.insert(0, msg);
+            });
+          }
         }
     ).subscribe();
   }
@@ -54,7 +61,8 @@ class _ChatPageState extends State<ChatPage> {
       await supabase.from("messages").insert({
         'user_id': user.id,
         'content': text,
-        'email': user.email
+        'email': user.email,
+        'room_id': widget.roomId
       });
       _controller.clear();
     }
@@ -63,7 +71,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("채팅")),
+      appBar: AppBar(title: Text(widget.roomName)),
       body: Column(
           children: [
             Expanded(
